@@ -86,6 +86,6 @@ public class AuthController {
 
         User result = userRepository.save(user);
 
-        return new ResponseEntity(new ApiResponse(true, "User registered successfully"),HttpStatus.CREATED);
+        return new ResponseEntity(new ApiResponse("User registered successfully",null ),HttpStatus.CREATED);
     }
 }

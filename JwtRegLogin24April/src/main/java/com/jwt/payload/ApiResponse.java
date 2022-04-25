@@ -1,27 +1,35 @@
 package com.jwt.payload;
 
 public class ApiResponse {
-    private Boolean success;
-    private String message;
+    private Object data = null;
+    private String error = null;
 
-    public ApiResponse(Boolean success, String message) {
-        this.success = success;
-        this.message = message;
+    public ApiResponse(Object data, String error) {
+        this.data = data;
+        this.error = error;
     }
 
-    public Boolean getSuccess() {
-        return success;
+    public Object getData() {
+        return data;
     }
 
-    public void setSuccess(Boolean success) {
-        this.success = success;
+    public void setData(Object data) {
+        this.data = data;
     }
 
-    public String getMessage() {
-        return message;
+    public String getError() {
+        return error;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setError(String error) {
+        this.error = error;
+    }
+
+    @Override
+    public String toString() {
+        return "ApiResponse{" +
+                "data=" + data +
+                ", error='" + error + '\'' +
+                '}';
     }
 }
