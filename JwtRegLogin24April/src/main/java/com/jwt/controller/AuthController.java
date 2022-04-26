@@ -4,10 +4,7 @@ import com.jwt.exception.AppException;
 import com.jwt.model.Role;
 import com.jwt.model.RoleName;
 import com.jwt.model.User;
-import com.jwt.payload.ApiResponse;
-import com.jwt.payload.JwtAuthenticationResponse;
-import com.jwt.payload.LoginRequest;
-import com.jwt.payload.SignUpRequest;
+import com.jwt.payload.*;
 import com.jwt.repository.RoleRepository;
 import com.jwt.repository.UserRepository;
 import com.jwt.security.JwtTokenProvider;
@@ -62,16 +59,19 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = tokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+        return new ResponseEntity<>(new ApiResponse(new JwtAuthenticationResponse(jwt),null),HttpStatus.OK);
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
 
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-            return new ResponseEntity(new ApiResponse(false, "Email Address already in use!"),
+            return new ResponseEntity(new ApiResponse(null, new ErrorResponse("Email Address already in use!")),
                     HttpStatus.BAD_REQUEST);
         }
+//        else {
+//            return new ResponseEntity(new ApiResponse(null,"Email not found"),HttpStatus.BAD_REQUEST);
+//        }
 
         // Creating user's account
         User user = new User(signUpRequest.getName(),
@@ -86,6 +86,6 @@ public class AuthController {
 
         User result = userRepository.save(user);
 
-        return new ResponseEntity(new ApiResponse("User registered successfully",null ),HttpStatus.CREATED);
+        return new ResponseEntity(new ApiResponse(new ErrorResponse("User registered successfully"),null ),HttpStatus.CREATED); //201
     }
 }

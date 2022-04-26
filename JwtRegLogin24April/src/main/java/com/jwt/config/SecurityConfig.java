@@ -61,9 +61,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(passwordEncoder());
     }
 
-    @Autowired
-    private LoginSuccessHandler loginSuccessHandler;
-
     /*
     authenticate a user in the login API.
      */
@@ -97,16 +94,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .exceptionHandling()
-                .authenticationEntryPoint(unauthorizedHandler)
-                //new part
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .usernameParameter("email")
-                .successHandler(loginSuccessHandler)
-                .permitAll()
-                .and()
-                .logout().permitAll();
+                .authenticationEntryPoint(unauthorizedHandler);
 
         // Add our custom JWT security filter
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

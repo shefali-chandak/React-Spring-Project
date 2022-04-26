@@ -2,12 +2,7 @@ package com.jwt.payload;
 
 public class ApiResponse {
     private Object data = null;
-    private String error = null;
-
-    public ApiResponse(Object data, String error) {
-        this.data = data;
-        this.error = error;
-    }
+    private Object error;
 
     public Object getData() {
         return data;
@@ -17,19 +12,20 @@ public class ApiResponse {
         this.data = data;
     }
 
-    public String getError() {
+    public Object getError() {
         return error;
     }
 
-    public void setError(String error) {
+    public void setError(Object error) {
         this.error = error;
     }
 
-    @Override
-    public String toString() {
-        return "ApiResponse{" +
-                "data=" + data +
-                ", error='" + error + '\'' +
-                '}';
+    public ApiResponse(Object data, Object error) {
+        this.data = data;
+        this.error = error;
+    }
+
+    public ApiResponse(Object error) {
+        this.error = error;
     }
 }

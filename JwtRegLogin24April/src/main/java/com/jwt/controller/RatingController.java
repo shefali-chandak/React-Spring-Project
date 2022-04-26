@@ -3,6 +3,7 @@ package com.jwt.controller;
 import com.jwt.model.Ratings;
 import com.jwt.model.User;
 import com.jwt.payload.ApiResponse;
+import com.jwt.payload.ErrorResponse;
 import com.jwt.payload.LoginRequest;
 import com.jwt.payload.RatingRequest;
 import com.jwt.repository.RatingRepository;
@@ -49,8 +50,6 @@ public class RatingController {
         ratings.setUser(user);
 
         ratingRepository.save(ratings);
-        return new ResponseEntity(new ApiResponse("Rating added successfully",null ), HttpStatus.CREATED);
-
-
+        return new ResponseEntity(new ApiResponse(new ErrorResponse("Rating added successfully"),null ), HttpStatus.CREATED);
     }
 }

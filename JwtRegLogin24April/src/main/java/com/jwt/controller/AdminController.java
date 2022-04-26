@@ -1,7 +1,9 @@
 package com.jwt.controller;
 
+import com.jwt.payload.ApiResponse;
 import com.jwt.payload.AverageResponse;
 import com.jwt.payload.FilterResponse;
+import com.jwt.payload.ErrorResponse;
 import com.jwt.repository.AverageRepository;
 import com.jwt.repository.FilterRatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +36,7 @@ public class AdminController {
                 Integer.parseInt(drinks),
                 Integer.parseInt(cleanliness));
 
-        return ResponseEntity.ok(filter);
+        return ResponseEntity.ok(new ApiResponse(filter,new ErrorResponse("null")));
     }
 
     @Autowired
@@ -43,15 +45,9 @@ public class AdminController {
     @GetMapping("/averageRatings")
     public ResponseEntity<?> avgOfRatings() {
 
-        Double ambiance = averageRepository.avgAmbiance();
-        Double cleanliness = averageRepository.avgCleanliness();
-        Double service = averageRepository.avgService();
-        Double drinks = averageRepository.avgDrinks();
-        Double food = averageRepository.avgFood();
+        AverageResponse totalAverage  = averageRepository.averages();
 
-        Double totalAverage = (ambiance + cleanliness + service + drinks + food) / 5;
-
-        return ResponseEntity.ok(new AverageResponse(ambiance,cleanliness,service,food,drinks,totalAverage));
+        return ResponseEntity.ok(new ApiResponse(totalAverage,null));
     }
 
 

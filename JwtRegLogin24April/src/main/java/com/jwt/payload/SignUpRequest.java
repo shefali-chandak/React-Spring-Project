@@ -1,12 +1,13 @@
 package com.jwt.payload;
 
 import javax.validation.constraints.*;
-
+//Not blank - not be null and must contain at least one non-whitespace character.
 public class SignUpRequest {
     @NotBlank
     private String name;
 
     @NotBlank
+    @Email(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}")
     private String email;
 
     @NotBlank

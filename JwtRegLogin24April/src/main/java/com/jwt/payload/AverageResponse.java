@@ -17,6 +17,7 @@ public class AverageResponse {
         this.totalAverage = totalAverage;
     }
 
+
     public double getAmbiance() {
         return ambiance;
     }
